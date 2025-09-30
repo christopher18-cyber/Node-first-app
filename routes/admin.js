@@ -6,10 +6,10 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const Router = express.Router();
-export const products = [];
+const products = [];
 
 Router.get("/add-product", (req, res, next) => {
-  res.sendFile(path.join(__dirname, "../", "views", "add-product.html"));
+  res.render("add-product", { pageTitle: "Add product" });
 });
 
 Router.post("/add-product", (req, res, next) => {
@@ -17,4 +17,5 @@ Router.post("/add-product", (req, res, next) => {
   res.redirect("/");
 });
 
+export { products };
 export default Router;

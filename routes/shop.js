@@ -1,12 +1,11 @@
 import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
-import adminData from "../routes/admin.js";
+import adminRouter, { products } from "../routes/admin.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const Router = express.Router();
 Router.get("/", (req, res, next) => {
-  console.log("shop.js", adminData.product);
-  res.sendFile(path.join(__dirname, "../", "views", "shop.html"));
+  res.render("shop", { prods: products, docTitle: "My love" });
 });
 export default Router;
