@@ -1,10 +1,13 @@
 import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
-import * as productsController from "../controllers/products.js";
+import * as productsController from "../controllers/shop.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const Router = express.Router();
-Router.get("/", productsController.getProducts);
-// Router.post("/products", productsController.getAddProducts);
+Router.get("/", productsController.getIndex);
+Router.post("/products", productsController.getProducts);
+Router.get("/cart", productsController.getCart);
+Router.get("/products", productsController.getProducts);
+Router.get("/checkout", productsController.checkout);
 export default Router;
