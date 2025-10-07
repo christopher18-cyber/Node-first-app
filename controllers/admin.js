@@ -11,14 +11,18 @@ export function getAddProducts(req, res, next) {
 }
 
 export function postAddProduct(req, res, next) {
-  const product = new Product(req.body.title);
+  const title = req.body.title;
+  const imageUrl = req.body.imageUrl;
+  const description = req.body.description;
+  const price = req.body.price;
+  const product = new Product(title, imageUrl, description, price);
   product.save();
   res.redirect("/");
 }
 
 export function getProducts(req, res, next) {
   Product.fetchAll((products) => {
-    res.render("admin/products", {
+    res.render("admin/product", {
       prods: products,
       docTitle: "Shop",
       path: "/admin/products",

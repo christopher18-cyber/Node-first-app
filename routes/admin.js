@@ -8,7 +8,7 @@ const __dirname = path.dirname(__filename);
 const Router = express.Router();
 
 Router.get("/add-product", productsController.getAddProducts);
-// Router.get("/products");
+Router.get("/products", productsController.getProducts);
 
 Router.post("/add-product", productsController.postAddProduct);
 
