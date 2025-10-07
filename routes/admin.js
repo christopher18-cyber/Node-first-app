@@ -2,23 +2,13 @@ import express from "express";
 import path from "path";
 import { title } from "process";
 import { fileURLToPath } from "url";
-// import rootDir from "./ullt/path.js";
+import * as productsController from "../controllers/products.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const Router = express.Router();
-const products = [];
 
-Router.get("/add-product", (req, res, next) => {
-  res.render("add-product", {
-    pageTitle: "Add product",
-    path: "/admin/add-product",
-  });
-});
+Router.get("/add-product", productsController.getAddProducts);
 
-Router.post("/add-product", (req, res, next) => {
-  products.push({ title: req.body.title });
-  res.redirect("/");
-});
+Router.post("/add-product", productsController.postAddProduct);
 
-export { products };
 export default Router;
