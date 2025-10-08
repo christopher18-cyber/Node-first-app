@@ -1,7 +1,7 @@
 import Product from "../models/product.js";
 
 export function getAddProducts(req, res, next) {
-  res.render("admin/add-product", {
+  res.render("admin/add-products", {
     pageTitle: "Add product",
     path: "/admin/add-product",
     formsCSS: true,
