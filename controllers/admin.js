@@ -1,7 +1,7 @@
 import Product from "../models/product.js";
 
 export function getAddProducts(req, res, next) {
-  res.render("admin/add-products", {
+  res.render("admin/add-product", {
     pageTitle: "Add product",
     path: "/admin/add-product",
     formsCSS: true,
@@ -22,7 +22,7 @@ export function postAddProduct(req, res, next) {
 
 export function getProducts(req, res, next) {
   Product.fetchAll((products) => {
-    res.render("admin/product", {
+    res.render("admin/products", {
       prods: products,
       docTitle: "Shop",
       path: "/admin/products",
