@@ -9,7 +9,7 @@ const Router = express.Router();
 
 Router.get("/add-product", productsController.getAddProducts);
 Router.get("/products", productsController.getProducts);
-
+Router.get("/edit-product/:productId", productsController.getEditProducts);
 Router.post("/add-product", productsController.postAddProduct);
 
 export default Router;

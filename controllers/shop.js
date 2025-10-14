@@ -1,4 +1,5 @@
 import Product from "../models/product.js";
+import { Cart } from "../models/cart.js";
 
 export function getProducts(req, res, next) {
   Product.fetchAll((products) => {
@@ -43,7 +44,9 @@ export function getCart(req, res, next) {
 
 export function postCard(req, res, next) {
   const prodId = req.body.productId;
-  console.log(prodId);
+  Product.findById(prodId, (product) => {
+    Cart.addProducts(prodId, product.price);
+  });
   res.redirect("/cart");
 }
 

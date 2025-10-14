@@ -1,4 +1,3 @@
-"use strict";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -7,20 +6,30 @@ const __dirname = path.dirname(__filename);
 const pathToFile = path.join(__dirname, "../data/cart.json");
 export class Cart {
   static addProducts(id, productPrice) {
+    // Fetch the previous cart
     fs.readFile(pathToFile, (err, fileContent) => {
       let cart = { products: [], calcPrice: 0 };
       if (!err) {
         cart = JSON.parse(fileContent);
       }
-      const existingProducts = cart.products.find((prod) => prod.id === id);
+      const existingProductsIndex = cart.products.findIndex(
+        (prod) => prod.id === id
+      );
+      const existingProducts = cart.products[existingProductsIndex];
       let updatedProduct;
       if (existingProducts) {
         updatedProduct = { ...existingProducts };
         updatedProduct.qty = updatedProduct.qty + 1;
+        cart.products = [...cart.products];
+        cart.products[existingProducts] = updatedProduct;
       } else {
         updatedProduct = { id: id, qty: 1 };
+        cart.products = [...cart.products, updatedProduct];
       }
-      cart.totalPrice = cart.totalPrice + productPrice;
+      cart.totalPrice = cart.totalPrice + +productPrice;
+      fs.writeFile(pathToFile, JSON.stringify(cart), (err) => {
+        console.log(err);
+      });
     });
   }
 }
