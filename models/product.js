@@ -1,4 +1,5 @@
 import fs from "fs";
+import * as Cart from "../models/cart.js";
 import path from "path";
 import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
@@ -45,6 +46,18 @@ export default class Product {
     // fs.readFile(pathToFile, (err, fileContent) => {
     //   let products = [];
     // });
+  }
+
+  static deleteById(id) {
+    getProductsFromFile((products) => {
+      const product = products.find((prod) => prod.id === id);
+      const updatedProduct = products.filter((prod) => prod.id !== id);
+      fs.writeFile(pathToFile, JSON.stringify(updatedProduct), (err) => {
+        if (!err) {
+          Cart.deleteProduct(id, product.price);
+        }
+      });
+    });
   }
 
   static fetchAll(cb) {

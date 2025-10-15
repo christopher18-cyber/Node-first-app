@@ -32,4 +32,22 @@ export class Cart {
       });
     });
   }
+  static deleteProduct(id, productPrice) {
+    fs.readFile(pathToFile, (err, fileContent) => {
+      if (err) {
+        return;
+      }
+      const updatedCart = { ...fileContent };
+      const productIndex = updatedCart.products.findIndex(
+        (prod) => prod.id === id
+      );
+      const productQty = product.qty;
+      updatedCart.products = updatedCart.product.filter();
+      updatedCart.totalPrice =
+        updatedCart.totalPrice - productPrice * productQty;
+      fs.writeFile(pathToFile, JSON.stringify(updatedCart), (err) => {
+        console.log(err);
+      });
+    });
+  }
 }

@@ -57,10 +57,16 @@ export function postEditProduct(req, res, next) {
   const updatedProducts = new Product(
     prodId,
     updatedTitle,
-    updatedPrice,
     updatedImage,
-    updatedDescription
+    updatedDescription,
+    updatedPrice
   );
   updatedProducts.save();
+  res.redirect("/admin/products");
+}
+
+export function postDeleteProduct(req, res, next) {
+  const prodId = req.body.productId;
+  Product.deleteById(prodId);
   res.redirect("/admin/products");
 }
