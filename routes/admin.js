@@ -11,5 +11,6 @@ Router.get("/add-product", productsController.getAddProducts);
 Router.get("/products", productsController.getProducts);
 Router.get("/edit-product/:productId", productsController.getEditProducts);
 Router.post("/add-product", productsController.postAddProduct);
+Router.post("/edit-product", productsController.postEditProduct);
 
 export default Router;

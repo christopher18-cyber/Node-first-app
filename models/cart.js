@@ -8,7 +8,7 @@ export class Cart {
   static addProducts(id, productPrice) {
     // Fetch the previous cart
     fs.readFile(pathToFile, (err, fileContent) => {
-      let cart = { products: [], calcPrice: 0 };
+      let cart = { products: [], totalPrice: 0 };
       if (!err) {
         cart = JSON.parse(fileContent);
       }
@@ -21,7 +21,7 @@ export class Cart {
         updatedProduct = { ...existingProducts };
         updatedProduct.qty = updatedProduct.qty + 1;
         cart.products = [...cart.products];
-        cart.products[existingProducts] = updatedProduct;
+        cart.products[existingProductsIndex] = updatedProduct;
       } else {
         updatedProduct = { id: id, qty: 1 };
         cart.products = [...cart.products, updatedProduct];
