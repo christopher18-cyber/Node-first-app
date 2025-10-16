@@ -1,20 +1,5 @@
-import fs from "fs";
+import database from "../ullt/database.js";
 import * as Cart from "../models/cart.js";
-import path from "path";
-import { fileURLToPath } from "url";
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const pathToFile = path.join(__dirname, "../data/products.json");
-
-const getProductsFromFile = (cb) => {
-  fs.readFile(pathToFile, (err, fileContent) => {
-    if (err) {
-      cb([]);
-    } else {
-      cb(JSON.parse(fileContent));
-    }
-  });
-};
 export default class Product {
   constructor(id, title, imageUrl, description, price) {
     this.id = id;
@@ -24,49 +9,10 @@ export default class Product {
     this.price = price;
   }
 
-  save() {
-    getProductsFromFile((products) => {
-      if (this.id) {
-        const existingProductsIndex = products.findIndex(
-          (prod) => prod.id === this.id
-        );
-        const updatedProducts = [...products];
-        updatedProducts[existingProductsIndex] = this;
-        fs.writeFile(pathToFile, JSON.stringify(updatedProducts), (err) => {
-          console.log(err);
-        });
-      } else {
-        this.id = Math.random().toString();
-        products.push(this);
-        fs.writeFile(pathToFile, JSON.stringify(products), (err) => {
-          console.log(err);
-        });
-      }
-    });
-    // fs.readFile(pathToFile, (err, fileContent) => {
-    //   let products = [];
-    // });
-  }
+  save() {}
 
-  static deleteById(id) {
-    getProductsFromFile((products) => {
-      const product = products.find((prod) => prod.id === id);
-      const updatedProduct = products.filter((prod) => prod.id !== id);
-      fs.writeFile(pathToFile, JSON.stringify(updatedProduct), (err) => {
-        if (!err) {
-          Cart.deleteProduct(id, product.price);
-        }
-      });
-    });
-  }
+  static deleteById() {}
 
-  static fetchAll(cb) {
-    getProductsFromFile(cb);
-  }
-  static findById(id, cb) {
-    getProductsFromFile((products) => {
-      const product = products.find((p) => p.id === id);
-      cb(product);
-    });
-  }
+  static fetchAll() {}
+  static findById() {}
 }

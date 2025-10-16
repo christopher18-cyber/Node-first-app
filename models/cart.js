@@ -37,10 +37,13 @@ export class Cart {
       if (err) {
         return;
       }
-      const updatedCart = { ...fileContent };
+      const updatedCart = { ...JSON.parse(fileContent) };
       const productIndex = updatedCart.products.findIndex(
         (prod) => prod.id === id
       );
+      if (!product) {
+        return;
+      }
       const productQty = product.qty;
       updatedCart.products = updatedCart.product.filter();
       updatedCart.totalPrice =
@@ -48,6 +51,17 @@ export class Cart {
       fs.writeFile(pathToFile, JSON.stringify(updatedCart), (err) => {
         console.log(err);
       });
+    });
+  }
+
+  static getCart(cb) {
+    fs.readFile(pathToFile, (err, fileContent) => {
+      const cart = JSON.parse(fileContent);
+      if (err) {
+        cb(null);
+      } else {
+        cb(cart);
+      }
     });
   }
 }
