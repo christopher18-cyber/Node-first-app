@@ -1,18 +1,26 @@
-import database from "../ullt/database.js";
-import * as Cart from "../models/cart.js";
-export default class Product {
-  constructor(id, title, imageUrl, description, price) {
-    this.id = id;
-    this.title = title;
-    this.imageUrl = imageUrl;
-    this.description = description;
-    this.price = price;
-  }
+import sequelize from "../ullt/database.js";
+import { Sequelize } from "sequelize";
 
-  save() {}
+const Product = sequelize.define("product", {
+  id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    allowNull: true,
+    primaryKey: true,
+  },
+  title: Sequelize.STRING,
+  price: {
+    type: Sequelize.DOUBLE,
+    allowNull: false,
+  },
+  imageUrl: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  description: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+});
 
-  static deleteById() {}
-
-  static fetchAll() {}
-  static findById() {}
-}
+export default Product;

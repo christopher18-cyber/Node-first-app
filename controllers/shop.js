@@ -2,37 +2,54 @@ import Product from "../models/product.js";
 import { Cart } from "../models/cart.js";
 
 export function getProducts(req, res, next) {
-  Product.fetchAll((products) => {
-    res.render("shop/product-list", {
-      prods: products,
-      docTitle: "Shop",
-      path: "/products",
-      pageTitle: "All products",
+  Product.findAll()
+    .then((products) => {
+      res.render("shop/product-list", {
+        prods: products,
+        docTitle: "Shop",
+        path: "/products",
+        pageTitle: "All products",
+      });
+    })
+    .catch((err) => {
+      console.log(err);
     });
-  });
 }
 
 export function getProduct(req, res, next) {
   const prodId = req.params.productId;
-  // console.log(prodId);
-  Product.findById(prodId, (product) => {
-    res.render("shop/product-details", {
-      product: product,
-      pageTitle: product.title,
-      path: "/products",
+  Product.findByPk(prodId)
+    .then((product) => {
+      res.render("shop/product-details", {
+        product: product,
+        pageTitle: product.title,
+        path: "/products",
+      });
+    })
+    .catch((err) => {
+      console.log(err);
     });
-  });
 }
 
 export function getIndex(req, res, next) {
-  Product.fetchAll((products) => {
-    res.render("shop/index", {
-      prods: products,
-      docTitle: "Shop",
-      path: "/index",
-      pageTitle: "Shop",
+  Product.findAll()
+    .then((products) => {
+      res.render("shop/index", {
+        prods: products,
+        docTitle: "Shop",
+        path: "/index",
+        pageTitle: "Shop",
+      });
+    })
+    .catch((err) => {
+      console.log(err);
     });
-  });
+  // Product.fetchAll()
+  //   .then(([rows, fieldData]) => {})
+  //   .catch((err) => {
+  //     console.log(err);
+  //   });
+  // Product.fetchAll((products) => {});
 }
 
 export function getCart(req, res, next) {
