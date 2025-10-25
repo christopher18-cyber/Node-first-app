@@ -3,10 +3,10 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 import bodyParser from "body-parser";
-// import shopRoutes from "./routes/shop.js";
-// import adminRouter from "./routes/admin.js";
+import shopRoutes from "./routes/shop.js";
+import adminRouter from "./routes/admin.js";
 import { get404 } from "./controllers/404.js";
-import mongoConnect from "./ullt/database.js";
+import { mongoConnect } from "./ullt/database.js";
 // import sequelize from "./ullt/database.js";
 // import User from "./models/user.js";
 // import Product from "./models/product.js";
@@ -25,22 +25,23 @@ app.set("views", path.join(__dirname, "views"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
-// app.use("/admin", adminRouter);
+app.use("/admin", adminRouter);
 
-// app.use(shopRoutes);
+app.use(shopRoutes);
 
-// app.use(get404);
+app.use(get404);
 
-// app.use((req, res, next) => {
-//   User.findByPk(1)
-//     .then((user) => {
-//       req.user = user;
-//       next();
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     });
-// });
+app.use((req, res, next) => {
+  //   User.findByPk(1)
+  //     .then((user) => {
+  //       req.user = user;
+  //       next();
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  next();
+});
 
 // Product.belongsTo(User, { constraints: true, onDelete: "CASCADE" });
 // User.hasMany(Product);
@@ -72,8 +73,7 @@ app.use(express.static(path.join(__dirname, "public")));
 //     console.log(err);
 //   });
 
-mongoConnect((client) => {
-  console.log(client);
+mongoConnect(() => {
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
   });

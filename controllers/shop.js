@@ -1,9 +1,9 @@
 import Product from "../models/product.js";
 
-import Order from "../models/order.js";
+// import Order from "../models/order.js";
 
 export function getProducts(req, res, next) {
-  Product.findAll()
+  Product.fetchAll()
     .then((products) => {
       res.render("shop/product-list", {
         prods: products,
@@ -33,7 +33,7 @@ export function getProduct(req, res, next) {
 }
 
 export function getIndex(req, res, next) {
-  Product.findAll()
+  Product.fetchAll()
     .then((products) => {
       res.render("shop/index", {
         prods: products,
